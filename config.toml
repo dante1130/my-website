@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://onedonte.com"
+base_url = "https://dante1130.github.io/my-website/"
 
 theme = "terminimal"
 
