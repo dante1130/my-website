@@ -1,0 +1,35 @@
+# The URL the site will be built for
+base_url = "https://onedonte.com"
+
+theme = "terminimal"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+taxonomies = [
+    {name = "tags"},
+]
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = true
+
+[markdown]
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
+highlight_code = true
+
+[extra]
+logo_text = "Andrew Ho"
+logo_home_link = "/"
+author = "Andrew Ho"
+email = "andrewdante2@gmail.com"
+menu_items = [
+    {name = "blog", url = "$BASE_URL"},
+    
+    {name = "tags", url = "$BASE_URL/tags"},
+    {name = "archive", url = "$BASE_URL/archive"},
+    {name = "about me", url = "$BASE_URL/about"},
+    
+    {name = "github", url = "https://github.com/dante1130", newtab = true},
+]
+page_titles = "main_only"
