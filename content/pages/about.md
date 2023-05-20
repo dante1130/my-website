@@ -19,6 +19,11 @@ Hey! I'm Andrew, a software engineer in Australia working in real-time simulatio
 - **Technologies** - Unity, OpenGL, wgpu, .NET, React, Express.js, Git
 - **Knowledge** - Game Engine Development, Games Development, Graphics Programming, Web Development, Object-Oriented Programming, Data-Oriented Design
 
+## What I'm currently learning
+
+- **Rust** - I am primarily a C++ developer, and after hearing many good things about Rust, I decided to give it a try.
+- **Vim Motions** - I was astonished by how fast some people can navigate in Vim, and I want to be able to do the same.
+
 ## My ongoing projects
 
 - [**Luminol Engine**](https://github.com/dante1130/luminol-engine) - A game engine written in Rust and wgpu.
@@ -32,11 +37,6 @@ Hey! I'm Andrew, a software engineer in Australia working in real-time simulatio
 - [**Duck and Cover 2: Duck Harder**](https://bit.ly/duck-and-cover-demo) - A duck-themed FPS game made in C++ and rendering with OpenGL, extended from an esoteric legacy codebase.
 - [**Game Of Life**](https://github.com/dante1130/GameOfLife) - A simulation of Conway's Game of Life rendered with Canvas in JavaScript.
 - [**Reflex Shell**](https://github.com/dante1130/reflex-shell) - A custom shell written in C for the Linux Operating System.
-
-## What I'm currently learning
-
-- **Rust** - I am primarily a C++ developer, and after hearing many good things about Rust, I decided to give it a try.
-- **Vim Motions** - I was astonished by how fast some people can navigate in Vim, and I want to be able to do the same.
 
 ## Contact me
 
