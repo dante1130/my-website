@@ -50,7 +50,7 @@ Now, let's talk about why you should care about immutability and how it can help
 
 ## Why should you care?
 
-### 1. Initialization
+### Initialization
 
 From a [presentation](https://github.com/microsoft/MSRC-Security-Research/blob/master/presentations/2019_02_BlueHatIL/2019_01%20-%20BlueHatIL%20-%20Trends%2C%20challenge%2C%20and%20shifts%20in%20software%20vulnerability%20mitigation.pdf) by Matt Miller at BlueHat IL 2019, he mentioned that 70% of the vulnerabilities found in Microsoft products are memory safety issues.
 
@@ -109,20 +109,20 @@ This is good as not only does immutability prevent us from modifying a variable,
 
 It is a nice bonus best practice that you get for free, just by preferring immutability by default.
 
-### 2. State management
+### Clarity and correctness
 
 Immutability makes it clear to the reader that the variable will not be modified after it is created.
 
 If you've ever worked on a large codebase, you will know that it is hard to keep track of all the variables and their values.
 
-You step through the code with a debugger, go through the call stack, and try to figure out what is going on with one variable, only to realize "wait, this variable is not being modified at all". So then you go back to the call stack and try to figure out what is going on with another variable.
+You step through the code with a debugger, go through the call stack, and try to figure out what is going on with one variable, only to realize "Wait, this variable is not being modified at all". So then you go back to the call stack and try to figure out what is going on with another variable.
 
 For example, let's say we have a function that takes in a vector of integers and returns the sum of all the integers in the vector.
 
 ```cpp
 auto sum(std::vector<int>& numbers) -> int {
     int result = 0;
-    for (auto& number : numbers) {
+    for (auto number : numbers) {
         result += number;
     }
     return result;
@@ -146,7 +146,7 @@ But what if we had made `numbers` and `total` immutable?
 ```cpp
 auto sum(const std::vector<int>& numbers) -> int {
     int result = 0;
-    for (auto number : numbers) {
+    for (const auto number : numbers) {
         result += number;
     }
     return result;
@@ -161,10 +161,51 @@ auto main() -> int {
 
 Now to me, this is very clear that `numbers` and `total` could be read in this scope, but they will not be modified.
 
-Also, notice the change we made to the `sum` function, we made `numbers` parameter immutable as well, and we retrieve the elements in `numbers` by value instead of by reference. (If the type is expensive to copy, prefer using const reference, but since `int` is cheap to copy, we can just copy it)
+Also, notice the change we made to the `sum` function, we made `numbers` parameter immutable as well.
 
-That is a contract that we are making with the caller of the function, that we will not modify `numbers` in the function, and this gives the caller the confidence without having to go through the function to check.
+That is a contract that we are making with the caller of the function, that we will not modify `numbers` in the function, and this gives the caller the confidence that the object they passed in won't change, without having to go through the function to check.
 
-### 3. Performance
+In the `sum` function, we also make `number` immutable when we iterate through `numbers`, as we do not need to modify `number` in the loop.
+
+But now that we have done all this, it becomes clear that in this entire snippet, the only thing that can have its state changed is `result`.
+
+Not is this code clearer, but it is also correct and safer, as we have made it impossible to modify `numbers` and `total` by accident. I'm sure your reviewer will appreciate as well.
 
 ## Conclusion
+
+Immutability is a simple but powerful way you can use to write code that is safer, clearer and correct. If you use them, more than likely, you will run into fewer bugs and surprises.
+
+These are just some of the benefits of immutability, and there are more. But in my opinion, these are the most important ones.
+
+If you wish to start using immutability in your code, here are some tips:
+
+- Always make your variables immutable by default, and only make them mutable when you need to.
+- If you need to make a variable mutable, try to limit its scope as much as possible. [The root of all evil is shared mutable state](http://henrikeichenhardt.blogspot.com/2013/06/why-shared-mutable-state-is-root-of-all.html).
+- If you need to perform a complex initialization, you may use a lambda function, and `const` initialize the variable with the result of the lambda function.
+
+E.g.
+
+```cpp
+auto main() -> int {
+    const std::string name = []() {
+        std::string name;
+        std::cin >> name;
+        return name;
+    }();
+}
+```
+
+- Try the Rust programming language, as it is designed with immutability by default when declaring variables. It is very powerful and allows to easily create immutable variables with expressions.
+
+E.g.
+
+```rs
+// Rust uses immutable variables by default
+// To declare a mutable variable, you need to use the `mut` keyword
+fn main() {
+    let vector = vec![1, 2, 3, 4, 5];
+    let total = vector.iter().sum();
+}
+```
+
+I hope that this article has convinced you to prefer immutability whenever possible, if you have any questions or feedback, feel free to reach out to me in the **Contact me** section of my [about page](/about).
