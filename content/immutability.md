@@ -73,13 +73,15 @@ auto main() -> int {
 
 Here, we have created an integer `x` without initializing it. Then, when we try to print `x`, we get garbage values.
 
-As `x` is uninitialized, its value is a random memory address. When we try to print `x`, we are printing whatever value is stored at that memory address.
+As `x` is uninitialized, when we try to print `x`, we are printing whatever value is stored at that memory address.
 
 While this example is trivial, it will lead to serious bugs in more complex programs, which can be hard to debug.
 
+If you're using pointers, you can get a segfault if you try to dereference an uninitialized pointer, as it is pointing to a random memory address that you do not own.
+
 In this case, what if we had used `x` in a calculation, and assumed that it was 0? We would've gotten the wrong result.
 
-Worst of all, this won't crash your program, so you won't know that there is a bug.
+Worst of all, this won't crash your program, so you may not notice the bug until it's too late.
 
 What if I tell you, this bug would've been caught at compile time if we had made `x` immutable?
 
