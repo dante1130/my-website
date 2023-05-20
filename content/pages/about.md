@@ -26,7 +26,7 @@ Hey! I'm Andrew, a software engineer in Australia working in real-time simulatio
 
 ## What I'm currently learning
 
-- **Rust** - I was a C++ developer, and after hearing many good things about Rust, I decided to give it a try.
+- **Rust** - I am primarily a C++ developer, and after hearing many good things about Rust, I decided to give it a try.
 - **Vim Motions** - I was astonished by how fast some people can navigate in Vim, and I want to be able to do the same.
 
 ## Contact me
