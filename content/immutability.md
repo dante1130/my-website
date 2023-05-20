@@ -111,8 +111,60 @@ It is a nice bonus best practice that you get for free, just by preferring immut
 
 ### 2. State management
 
-### 3. Scope
+Immutability makes it clear to the reader that the variable will not be modified after it is created.
 
-### 4. Performance
+If you've ever worked on a large codebase, you will know that it is hard to keep track of all the variables and their values.
+
+You step through the code with a debugger, go through the call stack, and try to figure out what is going on with one variable, only to realize "wait, this variable is not being modified at all". So then you go back to the call stack and try to figure out what is going on with another variable.
+
+For example, let's say we have a function that takes in a vector of integers and returns the sum of all the integers in the vector.
+
+```cpp
+auto sum(std::vector<int>& numbers) -> int {
+    int result = 0;
+    for (auto& number : numbers) {
+        result += number;
+    }
+    return result;
+}
+
+auto main() -> int {
+    std::vector<int> numbers = {1, 2, 3, 4, 5};
+    int total = sum(numbers);
+    // more code here
+}
+```
+
+We declare `numbers` as a vector of integers from 1 to 5, and result as the sum of all the integers in `numbers`.
+
+Let's say there's more code after this, we cannot be confident whether that `numbers` and `total` have been modified down the path.
+
+So instead, we would have to go through the code and track down how they are being used.
+
+But what if we had made `numbers` and `total` immutable?
+
+```cpp
+auto sum(const std::vector<int>& numbers) -> int {
+    int result = 0;
+    for (auto number : numbers) {
+        result += number;
+    }
+    return result;
+}
+
+auto main() -> int {
+    const std::vector<int> numbers = {1, 2, 3, 4, 5};
+    const int total = sum(numbers);
+    // more code here
+}
+```
+
+Now to me, this is very clear that `numbers` and `total` could be read in this scope, but they will not be modified.
+
+Also, notice the change we made to the `sum` function, we made `numbers` parameter immutable as well, and we retrieve the elements in `numbers` by value instead of by reference. (If the type is expensive to copy, prefer using const reference, but since `int` is cheap to copy, we can just copy it)
+
+That is a contract that we are making with the caller of the function, that we will not modify `numbers` in the function, and this gives the caller the confidence without having to go through the function to check.
+
+### 3. Performance
 
 ## Conclusion
