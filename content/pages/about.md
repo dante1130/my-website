@@ -5,13 +5,13 @@ path = "about"
 
 # About me
 
-Hey! I'm Andrew, a software engineer in Australia working in real-time simulations for mining equipment.
+Hey! I'm Andrew, a software engineer in Australia working in real-time simulations for mining technologies.
 
 ## My interests
 
 - **Software Engineering** - I love learning new technologies and building things with them.
 - **Video Games** - I have been playing video games since I was a kid, and I still play them to this day.
-- **Cooking** - I love cooking, I cook almost every day, mostly Asian food.
+- **Cooking** - I love cooking, I cook almost every day, mostly pasta and Asian food.
 
 ## My skills
 
@@ -21,7 +21,7 @@ Hey! I'm Andrew, a software engineer in Australia working in real-time simulatio
 
 ## My ongoing projects
 
-- [**Luminol Engine**](https://github.com/dante1130/luminol_engine) - A game engine written in Rust and wgpu.
+- [**Luminol Engine**](https://github.com/dante1130/luminol-engine) - A game engine written in Rust and wgpu.
 - [**Luminol Bot**](https://github.com/dante1130/luminol-bot) - A Discord bot written in Rust using the Serenity library.
 
 ## What I'm currently learning
