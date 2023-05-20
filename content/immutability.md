@@ -1,6 +1,6 @@
 +++
 title = "Immutability and why should you care"
-date = 2023-05-23
+date = 2023-05-20
 
 [taxonomies]
 tags = ["best practices"]
