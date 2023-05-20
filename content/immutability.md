@@ -54,7 +54,7 @@ Now, let's talk about why you should care about immutability and how it can help
 
 From a [presentation](https://github.com/microsoft/MSRC-Security-Research/blob/master/presentations/2019_02_BlueHatIL/2019_01%20-%20BlueHatIL%20-%20Trends%2C%20challenge%2C%20and%20shifts%20in%20software%20vulnerability%20mitigation.pdf) by Matt Miller at BlueHat IL 2019, he mentioned that 70% of the vulnerabilities found in Microsoft products are memory safety issues.
 
-According to the root cause analysis of these vulnerabilities, the 4th most common root cause is "unitialized use".
+According to the root cause analysis of these vulnerabilities, the 4th most common root cause is "uninitialized use".
 
 This is when a variable is used before it is initialized, which can lead to undefined behaviour.
 
