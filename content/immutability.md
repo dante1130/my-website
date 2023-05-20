@@ -40,8 +40,6 @@ note: variable 'x' declared const here
          ~~~~~~~~~~^~~~~
 ```
 
-
-
 Some of you may be thinking; "Well, I can just not use the `const` keyword and make everything mutable. That way, I won't ever run into this problem. JavaScript and Python for life!".
 
 While yes, you can do that, but it is not a good idea.
