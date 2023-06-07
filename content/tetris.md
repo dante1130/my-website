@@ -283,6 +283,14 @@ When rotating blocks, it does not account if the new shape positions will collid
 
 As a result, in the event that happens, it will lock the current block in place and replace any position that it may have collided.
 
+### Extra space with rotations
+
+As we are storing each rotation state with its positions, this is effectively storing 4 times the amount of memory for each block that we instantiate.
+
+The alternative that I considered was to use an anchor point and use some math to rotate the positions around that.
+
+Though this may be a more complex solution, but you effectively only have to define your shape once, and you have the rest of the rotations already figured out with that algorithm.
+
 ### Some unfinished features
 
 - Hard drop
