@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://donte.dev/style.css">
+    <link rel="stylesheet" href="https://donte.dev/color/blue.css">
+
+    <link rel="stylesheet" href="https://donte.dev/font-hack-subset.css">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="/" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Andrew Ho
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://donte.dev">blog</a></li>
+            
+                <li><a href="https://donte.dev/tags">tags</a></li>
+            
+                <li><a href="https://donte.dev/archive">archive</a></li>
+            
+                <li><a href="https://donte.dev/about">about me</a></li>
+            
+                <li><a href="https://github.com/dante1130" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://donte.dev/immutability/">Immutability and why should you care</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-05-20
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://donte.dev/tags/best-practices/">#best practices</a></span>
+    
+
+        
+        <div class="post-content">
+            <p>Now, before we begin, I want to make it clear that I am not talking about immutability in the context of functional programming. Instead, I am talking about immutability in the context of programming in general.</p>
+<h2 id="what-is-immutability">What is immutability?</h2>
+<p>Immutability is the property of an object that prevents it from being modified after it is created, it is in other words, read-only.</p>
+<p>In most popular programming languages, the default behaviour is for objects to be mutable, but you can make them immutable often by using the <code>const</code> keyword.</p>
+<p>Here is an example in C++:</p>
+<pre data-lang="cpp" style="background-color:#2b303b;color:#c0c5ce;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#b48ead;">auto </span><span style="color:#8fa1b3;">main</span><span>() -&gt; </span><span style="color:#b48ead;">int </span><span>{
+</span><span>    </span><span style="color:#b48ead;">const int</span><span> x = </span><span style="color:#d08770;">5</span><span>;
+</span><span>}
+</span></code></pre>
+<p>Here we have created an immutable integer <code>x</code> with the value of 5. If we try to modify <code>x</code>, the compiler will throw an error.</p>
+<pre data-lang="cpp" style="background-color:#2b303b;color:#c0c5ce;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#b48ead;">auto </span><span style="color:#8fa1b3;">main</span><span>() -&gt; </span><span style="color:#b48ead;">int </span><span>{
+</span><span>    </span><span style="color:#b48ead;">const int</span><span> x = </span><span style="color:#d08770;">5</span><span>;
+</span><span>    x = </span><span style="color:#d08770;">10</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">error:</span><span> cannot assign to variable &#39;</span><span style="color:#a3be8c;">x</span><span>&#39; with const-qualified type &#39;</span><span style="color:#a3be8c;">const int</span><span>&#39;
+</span><span>         </span><span style="color:#bf616a;">x</span><span> = 10;
+</span><span>         </span><span style="color:#bf616a;">~</span><span> ^
+</span><span style="color:#bf616a;">note:</span><span> variable &#39;</span><span style="color:#a3be8c;">x</span><span>&#39; declared const here
+</span><span>         </span><span style="color:#bf616a;">const</span><span> int x = 5;
+</span><span>         </span><span style="color:#bf616a;">~~~~~~~~~~^~~~~
+</span></code></pre>
+<p>Some of you may be thinking; &quot;Well, I can just not use the <code>const</code> keyword and make everything mutable. That way, I won't ever run into this problem. JavaScript and Python for life!&quot;.</p>
+<p>While yes, you can do that, but it is not a good idea.</p>
+<p>And, before you ready your pitchforks, I am not saying that you should never use mutable variables, but rather, you should prefer immutability whenever possible.</p>
+<p>Now, let's talk about why you should care about immutability and how it can help you write better code.</p>
+<h2 id="why-should-you-care">Why should you care?</h2>
+<h3 id="initialization">Initialization</h3>
+<p>From a <a href="https://github.com/microsoft/MSRC-Security-Research/blob/master/presentations/2019_02_BlueHatIL/2019_01%20-%20BlueHatIL%20-%20Trends%2C%20challenge%2C%20and%20shifts%20in%20software%20vulnerability%20mitigation.pdf">presentation</a> by Matt Miller at BlueHat IL 2019, he mentioned that 70% of the vulnerabilities found in Microsoft products are memory safety issues.</p>
+<p>According to the root cause analysis of these vulnerabilities, the 4th most common root cause is &quot;uninitialized use&quot;.</p>
+<p>This is when a variable is used before it is initialized, which can lead to undefined behaviour.</p>
+<p>Here is an example in C++:</p>
+<pre data-lang="cpp" style="background-color:#2b303b;color:#c0c5ce;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#b48ead;">auto </span><span style="color:#8fa1b3;">main</span><span>() -&gt; </span><span style="color:#b48ead;">int </span><span>{
+</span><span>    </span><span style="color:#b48ead;">int</span><span> x;
+</span><span>    std::cout &lt;&lt; x;
+</span><span>}
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">2045585552
+</span></code></pre>
+<p>Here, we have created an integer <code>x</code> without initializing it. Then, when we try to print <code>x</code>, we get garbage values.</p>
+<p>As <code>x</code> is uninitialized, when we try to print <code>x</code>, we are printing whatever value is stored at that memory address.</p>
+<p>While this example is trivial, it will lead to serious bugs in more complex programs, which can be hard to debug.</p>
+<p>If you're using pointers, you can get a segfault if you try to dereference an uninitialized pointer, as it is pointing to a random memory address that you do not own.</p>
+<p>In this case, what if we had used <code>x</code> in a calculation, and assumed that it was 0? We would've gotten the wrong result.</p>
+<p>Worst of all, this won't crash your program, so you may not notice the bug until it's too late.</p>
+<p>What if I tell you, this bug would've been caught at compile time if we had made <code>x</code> immutable?</p>
+<pre data-lang="cpp" style="background-color:#2b303b;color:#c0c5ce;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#b48ead;">auto </span><span style="color:#8fa1b3;">main</span><span>() -&gt; </span><span style="color:#b48ead;">int </span><span>{
+</span><span>    </span><span style="color:#b48ead;">const int</span><span> x;
+</span><span>    std::cout &lt;&lt; x; 
+</span><span>}
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">error:</span><span> default initialization of an object of const type &#39;</span><span style="color:#a3be8c;">const int</span><span>&#39;
+</span><span>         </span><span style="color:#bf616a;">const</span><span> int x;
+</span><span>                   </span><span style="color:#bf616a;">^
+</span><span>                     = </span><span style="color:#bf616a;">0
+</span></code></pre>
+<p>Here, the compiler will throw an error because we are trying to create an <code>const</code> integer <code>x</code> while attempting to perform a default initialization.</p>
+<p>However, as <code>int</code> is a primitive type that is <code>const</code>, they do not have a default constructor, so the compiler does not know how to initialize <code>x</code> implicitly.</p>
+<p>To fix this, we can follow the compiler's suggestion and initialize <code>x</code> explicitly to 0.</p>
+<p>This is good as not only does immutability prevent us from modifying a variable, but it also prevents us from using a variable before it is initialized.</p>
+<p>It is a nice bonus best practice that you get for free, just by preferring immutability by default.</p>
+<h3 id="clarity-and-correctness">Clarity and correctness</h3>
+<p>Immutability makes it clear to the reader that the variable will not be modified after it is created.</p>
+<p>If you've ever worked on a large codebase, you will know that it is hard to keep track of all the variables and their values.</p>
+<p>You step through the code with a debugger, go through the call stack, and try to figure out what is going on with one variable, only to realize &quot;Wait, this variable is not being modified at all&quot;. So then you go back to the call stack and try to figure out what is going on with another variable.</p>
+<p>For example, let's say we have a function that takes in a vector of integers and returns the sum of all the integers in the vector.</p>
+<pre data-lang="cpp" style="background-color:#2b303b;color:#c0c5ce;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#b48ead;">auto </span><span style="color:#8fa1b3;">sum</span><span>(std::vector&lt;</span><span style="color:#b48ead;">int</span><span>&gt;&amp; </span><span style="color:#bf616a;">numbers</span><span>) -&gt; </span><span style="color:#b48ead;">int </span><span>{
+</span><span>    </span><span style="color:#b48ead;">int</span><span> result = </span><span style="color:#d08770;">0</span><span>;
+</span><span>    </span><span style="color:#b48ead;">for </span><span>(</span><span style="color:#b48ead;">auto</span><span> number : numbers) {
+</span><span>        result += number;
+</span><span>    }
+</span><span>    </span><span style="color:#b48ead;">return</span><span> result;
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">auto </span><span style="color:#8fa1b3;">main</span><span>() -&gt; </span><span style="color:#b48ead;">int </span><span>{
+</span><span>    std::vector&lt;</span><span style="color:#b48ead;">int</span><span>&gt; numbers = {</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">5</span><span>};
+</span><span>    </span><span style="color:#b48ead;">int</span><span> total = </span><span style="color:#bf616a;">sum</span><span>(numbers);
+</span><span>    </span><span style="color:#65737e;">// more code here
+</span><span>}
+</span></code></pre>
+<p>We declare <code>numbers</code> as a vector of integers from 1 to 5, and result as the sum of all the integers in <code>numbers</code>.</p>
+<p>Let's say there's more code after this, we cannot be confident whether that <code>numbers</code> and <code>total</code> have been modified down the path.</p>
+<p>So instead, we would have to go through the code and track down how they are being used.</p>
+<p>But what if we had made <code>numbers</code> and <code>total</code> immutable?</p>
+<pre data-lang="cpp" style="background-color:#2b303b;color:#c0c5ce;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#b48ead;">auto </span><span style="color:#8fa1b3;">sum</span><span>(</span><span style="color:#b48ead;">const</span><span> std::vector&lt;</span><span style="color:#b48ead;">int</span><span>&gt;&amp; </span><span style="color:#bf616a;">numbers</span><span>) -&gt; </span><span style="color:#b48ead;">int </span><span>{
+</span><span>    </span><span style="color:#b48ead;">int</span><span> result = </span><span style="color:#d08770;">0</span><span>;
+</span><span>    </span><span style="color:#b48ead;">for </span><span>(</span><span style="color:#b48ead;">const auto</span><span> number : numbers) {
+</span><span>        result += number;
+</span><span>    }
+</span><span>    </span><span style="color:#b48ead;">return</span><span> result;
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">auto </span><span style="color:#8fa1b3;">main</span><span>() -&gt; </span><span style="color:#b48ead;">int </span><span>{
+</span><span>    </span><span style="color:#b48ead;">const</span><span> std::vector&lt;</span><span style="color:#b48ead;">int</span><span>&gt; numbers = {</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">5</span><span>};
+</span><span>    </span><span style="color:#b48ead;">const int</span><span> total = </span><span style="color:#bf616a;">sum</span><span>(numbers);
+</span><span>    </span><span style="color:#65737e;">// more code here
+</span><span>}
+</span></code></pre>
+<p>Now to me, this is very clear that <code>numbers</code> and <code>total</code> could be read in this scope, but they will not be modified.</p>
+<p>Also, notice the change we made to the <code>sum</code> function, we made <code>numbers</code> parameter immutable as well.</p>
+<p>That is a contract that we are making with the caller of the function, that we will not modify <code>numbers</code> in the function, and this gives the caller the confidence that the object they passed in won't change, without having to go through the function to check.</p>
+<p>In the <code>sum</code> function, we also make <code>number</code> immutable when we iterate through <code>numbers</code>, as we do not need to modify <code>number</code> in the loop.</p>
+<p>But now that we have done all this, it becomes clear that in this entire snippet, the only thing that can have its state changed is <code>result</code>.</p>
+<p>Not is this code clearer, but it is also correct and safer, as we have made it impossible to modify <code>numbers</code> and <code>total</code> by accident. I'm sure your reviewer will appreciate as well.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Immutability is a simple but powerful way you can use to write code that is safer, clearer and correct. If you use them, more than likely, you will run into fewer bugs and surprises.</p>
+<p>These are just some of the benefits of immutability, and there are more. But in my opinion, these are the most important ones.</p>
+<p>If you wish to start using immutability in your code, here are some tips:</p>
+<ul>
+<li>Always make your variables immutable by default, and only make them mutable when you need to.</li>
+<li>If you need to make a variable mutable, try to limit its scope as much as possible. <a href="http://henrikeichenhardt.blogspot.com/2013/06/why-shared-mutable-state-is-root-of-all.html">The root of all evil is shared mutable state</a>.</li>
+<li>If you need to perform a complex initialization, you may use a lambda function, and <code>const</code> initialize the variable with the result of the lambda function.</li>
+</ul>
+<p>E.g.</p>
+<pre data-lang="cpp" style="background-color:#2b303b;color:#c0c5ce;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#b48ead;">auto </span><span style="color:#8fa1b3;">main</span><span>() -&gt; </span><span style="color:#b48ead;">int </span><span>{
+</span><span>    </span><span style="color:#b48ead;">const</span><span> std::string name = []() {
+</span><span>        std::string name;
+</span><span>        std::cin &gt;&gt; name;
+</span><span>        </span><span style="color:#b48ead;">return</span><span> name;
+</span><span>    }();
+</span><span>}
+</span></code></pre>
+<ul>
+<li>Try the Rust programming language, as it is designed with immutability by default when declaring variables. It is very powerful and allows to easily create immutable variables with expressions.</li>
+</ul>
+<p>E.g.</p>
+<pre data-lang="rs" style="background-color:#2b303b;color:#c0c5ce;" class="language-rs "><code class="language-rs" data-lang="rs"><span style="color:#65737e;">// Rust uses immutable variables by default
+</span><span style="color:#65737e;">// To declare a mutable variable, you need to use the `mut` keyword
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">main</span><span>() {
+</span><span>    </span><span style="color:#b48ead;">let</span><span> vector = vec![</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">5</span><span>];
+</span><span>    </span><span style="color:#b48ead;">let</span><span> total = vector.</span><span style="color:#96b5b4;">iter</span><span>().</span><span style="color:#96b5b4;">sum</span><span>();
+</span><span>}
+</span></code></pre>
+<p>I hope that this article has convinced you to prefer immutability whenever possible, if you have any questions or feedback, feel free to reach out to me in the <strong>Contact me</strong> section of my <a href="/about">about page</a>.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://donte.dev/hello-zola/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Hello, Zola!</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://donte.dev/tetris/">
+                            <span class="button__text">Building Tetris in Rust</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+<footer class="footer">
+	<div class="footer__inner">
+		<div class="copyright">
+			<span>©
+				
+    2023
+ Andrew Ho ::
+				<a href=mailto::andrewdante2@gmail.com>andrewdante2@gmail.com</a>
+			</span>
+		</div>
+	</div>
+</footer>
+
+
+</div>
+</body>
+
+</html>
