@@ -275,7 +275,7 @@ impl Grid {
 
 At this time of writing, the project still has some outstanding issues that has not been addressed.
 
-Perhaps, in the future that could also be never, these will be fixed. But for now, I think the project is fine as it is.
+Perhaps, in the future these will be fixed. But for now, I think the project is fine as it is.
 
 ### Handling collisions with rotations
 
